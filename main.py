@@ -32,14 +32,12 @@ def index():
 
 @route('/browse', method="get")
 def browse():
-    x = [utils.getJsonFromFile("7")]
-    y = json.loads(x[0])
-    m=y['id']
-    print (utils.getJsonFromFile('7'))
+        # x = [utils.getJsonFromFile({number})]
+        # y = json.loads(x[0])
+    m = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
+        # print (utils.getJsonFromFile('7'))
     sectionTemplate = "./templates/browse.tpl"
-    sectionData = "./data/7.json"
-    return template("./data/7.json")
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=m)
 
 
 
