@@ -35,7 +35,6 @@ def browse():
     x = [utils.getJsonFromFile("7")]
     y = json.loads(x[0])
     m=y['id']
-
     print (utils.getJsonFromFile('7'))
     sectionTemplate = "./templates/browse.tpl"
     sectionData = "./data/7.json"
@@ -62,7 +61,7 @@ def error404(error):
 @route('/show', method="get")
 def browse():
     sectionTemplate = "./templates/show.tpl"
-    sectionData="./data/7.json"
+
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 
