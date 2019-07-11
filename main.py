@@ -62,7 +62,8 @@ def error404(error):
 @route('/show', method="get")
 def browse():
     sectionTemplate = "./templates/show.tpl"
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
+    sectionData="./data/7.json"
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 
 def main():
