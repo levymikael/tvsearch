@@ -31,12 +31,13 @@ def index():
 
 @route('/browse', method="get")
 def browse():
-    x = [utils.getJsonFromFile("7")]
-    y = json.loads(x[0])
 
-    print (x)
 
     display_shows = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
+
+    m = display_shows[0]
+    y = m["summary"]
+    print(y)
     sectionTemplate = "./templates/browse.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=display_shows)
 
@@ -49,9 +50,25 @@ def browse():
 
 @route('/search', method="post")
 def test():
-    sectionTemplate = "./templates/search.tpl"
+
     name_search = request.forms.get("q")
-    return name_search
+    string_search=  (str.split(name_search))
+    display_shows = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
+
+    m = display_shows[8]
+    y = m["name"]
+    x=[m]
+    print(m)
+    print(x)
+    string_search2 = (str.split(y))
+    for r in string_search:
+        for k in string_search2:
+            if r == k:
+                print(r)
+                print(k)
+                sectionTemplate = "./templates/browse.tpl"
+                return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,sectionData=x)
+
 
 @route('/episode', method="get")
 def browse():
