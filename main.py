@@ -26,18 +26,19 @@ def img(filepath):
 @route('/')
 def index():
     sectionTemplate = "./templates/home.tpl"
-
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
 
 
 @route('/browse', method="get")
 def browse():
-        # x = [utils.getJsonFromFile({number})]
-        # y = json.loads(x[0])
-    m = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
-        # print (utils.getJsonFromFile('7'))
+    x = [utils.getJsonFromFile("7")]
+    y = json.loads(x[0])
+
+    print (x)
+
+    display_shows = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
     sectionTemplate = "./templates/browse.tpl"
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=m)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=display_shows)
 
 
 
@@ -45,6 +46,12 @@ def browse():
 def browse():
     sectionTemplate = "./templates/search.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
+
+@route('/search', method="post")
+def test():
+    sectionTemplate = "./templates/search.tpl"
+    name_search = request.forms.get("q")
+    return name_search
 
 @route('/episode', method="get")
 def browse():
