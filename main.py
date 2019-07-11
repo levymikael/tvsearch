@@ -22,4 +22,13 @@ def index():
     sectionTemplate = "./templates/home.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData = {})
 
-run(host='0.0.0.0', port=os.environ.get('PORT', 5000))
+def main():
+    run(host="localhost", port=7009)
+
+
+
+# def main ():
+#     run(host='0.0.0.0', port=os.environ.get('PORT', 5000))
+
+if __name__ == '__main__':
+     main()
