@@ -42,6 +42,10 @@ def browse():
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=display_shows)
 
 
+@route('/ajax/show/', method="get")
+def browse():
+    sectionTemplate = "./templates/search.tpl"
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
 
 @route('/search', method="get")
 def browse():
@@ -54,26 +58,36 @@ def test():
     name_search = request.forms.get("q")
     string_search=  (str.split(name_search))
     display_shows = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
-
-    m = display_shows[8]
+    m = display_shows[0]
     y = m["name"]
+    k=m["summary"]
     x=[m]
-    print(m)
-    print(x)
+    t=x[0]['_embedded']['episodes'][0]
+    print(t)
+
     string_search2 = (str.split(y))
+    string_search3 = (str.split(k))
     for r in string_search:
-        for k in string_search2:
+
+        for k in string_search2  :
             if r == k:
                 print(r)
                 print(k)
-                sectionTemplate = "./templates/browse.tpl"
-                return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,sectionData=x)
+                return "hey"
 
 
 @route('/episode', method="get")
 def browse():
     sectionTemplate = "./templates/episode.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
+
+@route('/ajax/show/<filename>')
+def show(filename):
+    sectionTemplate = "./templates/episode.tpl"
+
+    sectionData=utils.getShow(filename)
+
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 @error(404)
 def error404(error):
