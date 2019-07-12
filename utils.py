@@ -16,3 +16,6 @@ def getJsonFromFile(showName):
 def getShow(show):
     the_show= json.loads(getJsonFromFile(show))
     return the_show
+
+
+

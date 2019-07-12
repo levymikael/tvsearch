@@ -81,13 +81,18 @@ def browse():
     sectionTemplate = "./templates/episode.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
 
+
 @route('/ajax/show/<filename>')
 def show(filename):
-    sectionTemplate = "./templates/episode.tpl"
+    sectionTemplate = "./templates/show.tpl"
 
-    sectionData=utils.getShow(filename)
+    showfirst=utils.getShow(filename)
+    testnewEpisode=showfirst['_embedded']
+    print(showfirst['_embedded']['episodes'][0])
+    print(showfirst)
 
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
+
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=testnewEpisode)
 
 @error(404)
 def error404(error):
