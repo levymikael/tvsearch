@@ -92,7 +92,7 @@ def show(filename):
     print(showfirst)
 
 
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=testnewEpisode)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=showfirst)
 
 @error(404)
 def error404(error):
