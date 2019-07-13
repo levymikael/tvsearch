@@ -1,9 +1,7 @@
 import os
-from bottle import (get, post, redirect, request, route, run, static_file, template,error)
+from bottle import (get, post, redirect, request, route, run, static_file, template, error)
 import utils
 import json
-
-
 
 
 # Static Routes
@@ -31,45 +29,52 @@ def index():
 
 @route('/browse', method="get")
 def browse():
-
-
     display_shows = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
 
     m = display_shows[0]
     y = m["summary"]
     print(y)
     sectionTemplate = "./templates/browse.tpl"
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=display_shows)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,
+                    sectionData=display_shows)
 
+
+@route('/ajax/show/<showid>/episode/<episodeid>')
+def show_episode(showid, episodeid):
+    sectionTemplate = "./templates/episode.tpl"
+    sectionData = utils.get_episode(showid, episodeid)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,
+                    sectionData=sectionData)
 
 @route('/ajax/show/', method="get")
-def browse():
+def find_show():
     sectionTemplate = "./templates/search.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
 
+
 @route('/search', method="get")
-def browse():
+def search():
     sectionTemplate = "./templates/search.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
+
 
 @route('/search', method="post")
 def test():
-
     name_search = request.forms.get("q")
-    string_search=  (str.split(name_search))
+    string_search = (str.split(name_search))
     display_shows = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
     m = display_shows[0]
     y = m["name"]
-    k=m["summary"]
-    x=[m]
-    t=x[0]['_embedded']['episodes'][0]
+    k = m["summary"]
+    x = [m]
+    t = x[0]['_embedded']['episodes'][0]
     print(t)
 
     string_search2 = (str.split(y))
     string_search3 = (str.split(k))
     for r in string_search:
 
-        for k in string_search2  :
+        for k in string_search2:
             if r == k:
                 print(r)
                 print(k)
@@ -86,32 +91,33 @@ def browse():
 def show(filename):
     sectionTemplate = "./templates/show.tpl"
 
-    showfirst=utils.getShow(filename)
-    testnewEpisode=showfirst['_embedded']
+    showfirst = utils.getShow(filename)
+    testnewEpisode = showfirst['_embedded']
     print(showfirst['_embedded']['episodes'][0])
     print(showfirst)
 
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,
+                    sectionData=showfirst)
 
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=showfirst)
 
 @error(404)
 def error404(error):
     sectionTemplate = "./templates/404.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
 
+
 @route('/show', method="get")
 def browse():
     sectionTemplate = "./templates/show.tpl"
 
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,
+                    sectionData=sectionData)
 
 
 def main():
     run(host="localhost", port=os.environ.get('PORT', 7009))
 
 
-# def main ():
-#     run(host='0.0.0.0', port=os.environ.get('PORT', 5000))
 
 if __name__ == '__main__':
     main()

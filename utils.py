@@ -18,4 +18,13 @@ def getShow(show):
     return the_show
 
 
+def get_episode(showid, episodeid):
+    specific_show = json.loads(getJsonFromFile(showid))
+    list_episodes = specific_show["_embedded"]["episodes"]
+    episode = int(float(episodeid))
+    for item in list_episodes:
+        if item["id"] == episode:
+            return item
+
+
 
