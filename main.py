@@ -33,7 +33,6 @@ def browse():
 
     m = display_shows[0]
     y = m["summary"]
-    print(y)
     sectionTemplate = "./templates/browse.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,
                     sectionData=display_shows)
@@ -68,7 +67,6 @@ def test():
     k = m["summary"]
     x = [m]
     t = x[0]['_embedded']['episodes'][0]
-    print(t)
 
     string_search2 = (str.split(y))
     string_search3 = (str.split(k))
@@ -76,8 +74,6 @@ def test():
 
         for k in string_search2:
             if r == k:
-                print(r)
-                print(k)
                 return "hey"
 
 
@@ -93,9 +89,7 @@ def show(filename):
 
     showfirst = utils.getShow(filename)
     testnewEpisode = showfirst['_embedded']
-    print(showfirst['_embedded']['episodes'][0])
-    print(showfirst)
-
+  
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate,
                     sectionData=showfirst)
 
